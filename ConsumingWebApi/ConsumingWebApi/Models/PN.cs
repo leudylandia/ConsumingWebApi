@@ -30,6 +30,14 @@ namespace ConsumingWebApi.Models
                     BaseAddress = new Uri(urlBase)
                 };
 
+                //Solo tengo que poner el .Result para eliminar el error
+                //using (var cliente = new HttpClient())
+                //{
+                //    cliente.BaseAddress = new Uri("");
+                //    var repuesta = cliente.PostAsync("", content).Result;
+                //    var resultado = repuesta.Content.
+                //}
+
                 var url = $"{servicePrefix}{controller}";
                 var response = client.PostAsync(url, content); //Le envio la url y el cuerpo
                 var result = response.Content.ReadAsStringAsync();
