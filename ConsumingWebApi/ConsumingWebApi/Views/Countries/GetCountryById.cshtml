@@ -1,0 +1,27 @@
+﻿@model ConsumingWebApi.Dtos.CountryDto
+
+@{
+    ViewData["Title"] = "GetCountryById";
+}
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<h4>@ViewBag.Message</h4>
+
+<div>
+    <h1>Country Details</h1>
+    <br />
+    <div>
+        <p>
+            <b>Country Name:</b> @Model.Name
+            
+        </p>
+        <div class="form-group text-center">
+            <a class="btn btn-sm btn-primary" asp-action="UpdateCountry" asp-controller="Countries" asp-route-countryId="@Model.Id"> | Update</a>
+            <a class="btn btn-sm btn-danger" asp-action="DeleteCountry" asp-controller="Countries" asp-route-countryId="@Model.Id"> | Delete</a>
+        </div>
+    </div>
+</div>
+
+
+

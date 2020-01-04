@@ -7,102 +7,106 @@ using ConsumingWebApi.Dtos;
 
 namespace ConsumingWebApi.Services
 {
-    public class CountryRepository : ICountryRepository
+    public class CategoryRepository : ICategoryRepository
     {
-        public IEnumerable<AuthorDto> GetAuthorsFromACountry(int countryId)
+        public IEnumerable<BookDto> GetAllBooksForCategory(int categoryId)
         {
-            var authors = new List<AuthorDto>();
+            IEnumerable<BookDto> books = new List<BookDto>();
 
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:60039/api/");
-                var response = client.GetAsync($"countries/{countryId}");
+
+                var response = client.GetAsync($"categories/{categoryId}/books");
                 response.Wait();
 
                 var result = response.Result;
 
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<List<AuthorDto>>();
+                    var readTask = result.Content.ReadAsAsync<IList<BookDto>>();
                     readTask.Wait();
 
-                    authors = readTask.Result;
+                    books = readTask.Result;
                 }
             }
 
-            return authors;
+            return books;
         }
 
-        public IEnumerable<CountryDto> GetCountries()
+        public IEnumerable<CategoryDto> GetAllCategoriesOfABook(int bookId)
         {
-            IEnumerable<CountryDto> countries = new List<CountryDto>();
+            IEnumerable<CategoryDto> categories = new List<CategoryDto>();
 
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:60039/api/");
-                var response = client.GetAsync("countries");
+
+                var response = client.GetAsync($"categories/books/{bookId}");
                 response.Wait();
 
                 var result = response.Result;
 
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<IList<CountryDto>>();
+                    var readTask = result.Content.ReadAsAsync<IList<CategoryDto>>();
                     readTask.Wait();
 
-                    countries = readTask.Result;
+                    categories = readTask.Result;
                 }
             }
 
-            return countries;
+            return categories;
         }
 
-        public CountryDto GetCountryById(int countryId)
+        public IEnumerable<CategoryDto> GetCategories()
         {
-            CountryDto country = new CountryDto();
+            IEnumerable<CategoryDto> categories = new List<CategoryDto>();
 
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:60039/api/");
-                var response = client.GetAsync($"countries/{countryId}");
+
+                var response = client.GetAsync("categories");
                 response.Wait();
 
                 var result = response.Result;
 
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<CountryDto>();
+                    var readTask = result.Content.ReadAsAsync<IList<CategoryDto>>();
                     readTask.Wait();
 
-                    country = readTask.Result;
+                    categories = readTask.Result;
                 }
             }
 
-            return country;
+            return categories;
         }
 
-        public CountryDto GetCountryOfAnAuthor(int authorId)
+        public CategoryDto GetCategoryById(int categoryId)
         {
-            CountryDto country = new CountryDto();
+            CategoryDto category = new CategoryDto();
 
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:60039/api/");
-                var response = client.GetAsync($"countries/authors/{authorId}");
+
+                var response = client.GetAsync($"categories/{categoryId}");
                 response.Wait();
 
                 var result = response.Result;
 
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<CountryDto>();
+                    var readTask = result.Content.ReadAsAsync<CategoryDto>();
                     readTask.Wait();
 
-                    country = readTask.Result;
+                    category = readTask.Result;
                 }
             }
 
-            return country;
+            return category;
         }
     }
 }

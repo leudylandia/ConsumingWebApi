@@ -10,7 +10,7 @@ namespace ConsumingWebApi.Services
     {
         IEnumerable<ReviewerDto> GetReviewers();
         ReviewerDto GetReviewerById(int reviewrId);
-        IEnumerable<ReviewDto> GetReviewersByReviewer(int reviewerId);
-        ReviewDto GetReviewerOfAReview(int reviewId);
+        IEnumerable<ReviewDto> GetReviewerByReviewer(int reviewerId);
+        ReviewerDto GetReviewerOfAReview(int reviewId);
     }
 }

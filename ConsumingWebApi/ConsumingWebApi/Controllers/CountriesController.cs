@@ -27,5 +27,18 @@ namespace ConsumingWebApi.Controllers
 
             return View(countries);
         }
+
+        public IActionResult GetCountryById(int countryId)
+        {
+            var country = _countryRepository.GetCountryById(countryId);
+
+            if (country == null)
+            {
+                ModelState.AddModelError("", "Error getting a country");
+                ViewBag.Message = $"there was a problem retrieving couuntry with id {countryId} from the database or no country with that id exists";
+            }
+
+            return View(country);
+        }
     }
 }
